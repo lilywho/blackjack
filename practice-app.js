@@ -61,22 +61,29 @@
 // (ヘ･_･)ヘ┳━┳ moving on...
 // Time to figure out Fisher-Yates.
 
-// Empty array to push shuffled cards into
+// var deck, N.length
+// var shuffledDeck = [];
+
+// // To choose a random card to push into shuffledDeck
+// // N-- because index starts at 0
+// // Math.floor to round down to nearest full number
+// // Math.random to randomly select a card
+// var chosenCard = Math.floor(Math.random() * N--); 
+// // Pushes randomly selected chosenCard into shuffledDeck array
+// (shuffledDeck).push(chosenCard);
+// // chosenCard needs to be removed from deck array
+// .splice((chosenCard), 1)
+// // Repeat!
 var shuffledDeck = [];
-// This is where the magic happens
 var shuffle = function() {
 	while (deck.length !== 0) {
-		// Array index starts with 0, hence the -1
 		var cardPosition = deck.length - 1;
-		// Selecting card at that random index
 		var chosenCard = Math.floor(Math.random() * cardPosition);
-		// Taking the card out of original array 
-		// "deck" so there are no repeats
 		var moveCard = deck.splice(chosenCard, 1);
-		// Splice creates new array so [0] grabs the 
-		// object within the array created by splice, and
-		// the object is pushed into new array "shuffledDeck"
 		shuffledDeck.push(moveCard[0]);
 	};
 }
+
+
+
 
