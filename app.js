@@ -17,7 +17,7 @@
 	 {name: "J of Clubs", value: 10},
 	 {name: "Q of Clubs", value: 10},
  	 {name: "K of Clubs", value: 10},
-	 {name: "A of Clubs", value: ""},
+	 {name: "A of Clubs", value: 11},
 	 {name: "2 of Diamonds", value: 2},
 	 {name: "3 of Diamonds", value: 3},
 	 {name: "4 of Diamonds", value: 4},
@@ -30,7 +30,7 @@
 	 {name: "J of Diamonds", value: 10},
 	 {name: "Q of Diamonds", value: 10},
 	 {name: "K of Diamonds", value: 10},
-	 {name: "A of Diamonds", value: ""},
+	 {name: "A of Diamonds", value: 11},
 	 {name: "2 of Hearts", value: 2},
 	 {name: "3 of Hearts", value: 3},
 	 {name: "4 of Hearts", value: 4},
@@ -43,7 +43,7 @@
 	 {name: "J of Hearts", value: 10},
 	 {name: "Q of Hearts", value: 10},
 	 {name: "K of Hearts", value: 10},
-	 {name: "A of Hearts", value: ""},
+	 {name: "A of Hearts", value: 11},
 	 {name: "2 of Spades", value: 2},
 	 {name: "3 of Spades", value: 3},
 	 {name: "4 of Spades", value: 4},
@@ -56,7 +56,17 @@
 	 {name: "J of Spades", value: 10},
 	 {name: "Q of Spades", value: 10},
 	 {name: "K of Spades", value: 10},
-	 {name: "A of Spades", value: ""}];
+	 {name: "A of Spades", value: 11}];
+
+var hoomanPlayer = 
+	{hand: [],
+	 points: [],
+	 totalPoints: []};
+
+var dealer = 
+	{hand: [],
+	 points: [],
+	 totalPoints: []};
 
 // (ヘ･_･)ヘ┳━┳ moving on...
 // Time to figure out Fisher-Yates.
@@ -65,6 +75,7 @@
 var shuffledDeck = [];
 // This is where the magic happens
 var shuffle = function() {
+	// Repeats until the original deck is empty
 	while (deck.length !== 0) {
 		// Array index starts with 0, hence the -1
 		var cardPosition = deck.length - 1;
@@ -77,6 +88,56 @@ var shuffle = function() {
 		// object within the array created by splice, and
 		// the object is pushed into new array "shuffledDeck"
 		shuffledDeck.push(moveCard[0]);
+	};
+	console.log(shuffledDeck);
+	// Allows for multiple shuffles
+	deck = [];
+	deck = shuffledDeck;
+	console.log(deck);
+	shuffledDeck = [];
+}
+
+// Shuffle away!
+$("#shuffle").click(function() {
+	shuffle();
+	// Testing purposes
+	console.log(deck[0], deck[1], deck[2], deck[3]);
+});
+
+// Deal card
+var dealCard = function(player) {
+	cardDealt = deck.shift();
+	(player.hand).push(cardDealt);
+	console.log(player.hand);
+}
+
+// Calculate points
+var getPoints = function(player) {
+	for (var i = 0; i < player.hand.length; i++) {
+		player.points.push(player.hand[i].value);
+	};
+	console.log(player.points);
+		for (var i in player.points) {
+			player.totalPoints = player.points.reduce(function(a,b) {
+				return a + b;
+			});
+		};
+	console.log(player.totalPoints);
+	findAce(player);
+	console.log(player.totalPoints);
+	player.points = [];
+	player.totalPoints = 0;
+	console.log(player.points);
+	console.log(player.totalPoints);
+}
+
+var findAce = function(player) {
+	for (var i = 0; i < (player.hand).length; i++) {
+		if ((player.hand[i]).value === 11) {
+			if (player.totalPoints > 21) {
+				player.totalPoints = player.totalPoints - 10;
+			};
+		};
 	};
 }
 
