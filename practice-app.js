@@ -354,9 +354,20 @@ var runGame = function() {
 	getDealerPoints();
 }
 
+var calculateBlackjack = function () {
+	getPoints(hoomanPlayer);
+	getPoints(dealer);
+}
 
-
-
+var hitUntil17 = function() {
+	while (dealer.totalPoints < 17) {
+		clearPoints(dealer);
+		dealCard(dealer);
+		getPoints(dealer);
+	};
+// 	clearPoints(dealer);
+// 	getPoints(dealer);
+// };
 
 
 

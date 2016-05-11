@@ -101,7 +101,8 @@ var shuffle = function() {
 $("#shuffle").click(function() {
 	shuffle();
 	// Testing purposes
-	console.log(deck[0], deck[1], deck[2], deck[3]);
+	// Can't figure out the DRY way to do this
+	console.log(deck[0], deck[1], deck[2], deck[3], deck[4], deck[5]);
 });
 
 // Deal card
@@ -125,6 +126,10 @@ var getPoints = function(player) {
 	console.log(player.totalPoints);
 	findAce(player);
 	console.log(player.totalPoints);
+}
+
+// So there are no repeats
+var clearPoints = function(player) {
 	player.points = [];
 	player.totalPoints = 0;
 	console.log(player.points);
@@ -141,3 +146,36 @@ var findAce = function(player) {
 	};
 }
 
+var startGame = function() {
+	while (hoomanPlayer.hand.length < 2 && dealer.hand.length < 2) {
+	dealCard(hoomanPlayer);
+	dealCard(dealer);
+	};
+	getPoints(hoomanPlayer);
+	getPoints(dealer);
+}
+
+var hitUntil17 = function() {
+	while (dealer.totalPoints < 17) {
+		clearPoints(dealer);
+		dealCard(dealer);
+		getPoints(dealer);
+	};
+// 	clearPoints(dealer);
+// 	getPoints(dealer);
+};
+
+
+$("#hit-me").click(function() {
+	dealCard(hoomanPlayer);
+	clearPoints(hoomanPlayer)
+	getPoints(hoomanPlayer);
+});
+
+$("#start-game").click(function() {
+	startGame();
+});
+
+$("#stay").click(function() {
+	hitUntil17();
+});
