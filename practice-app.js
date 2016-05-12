@@ -354,11 +354,6 @@ var runGame = function() {
 	getDealerPoints();
 }
 
-var calculateBlackjack = function () {
-	getPoints(hoomanPlayer);
-	getPoints(dealer);
-}
-
 var hitUntil17 = function() {
 	while (dealer.totalPoints < 17) {
 		clearPoints(dealer);
@@ -367,8 +362,41 @@ var hitUntil17 = function() {
 	};
 // 	clearPoints(dealer);
 // 	getPoints(dealer);
-// };
+};
 
+var calculateWinner = function () {
+	if (hoomanPlayer.totalPoints > 21) {
+		// Dealer wins!
+		console.log("Dealer wins!");
+	} else if (dealer.totalPoints > 21) {
+		// Player wins!
+		console.log("Player wins!");
+	} else if (hoomanPlayer.totalPoints > dealer.totalPoints) {
+		// Player wins!
+		console.log("Player wins!");
+	} else if (dealer.totalPoints > hoomanPlayer.totalPoints) {
+		// Dealer wins!
+		console.log("Dealer wins!");
+	} else {
+		// Bust!
+		console.log("Bust!")
+	};
+};
 
+var newHand = function() {
+	hoomanPlayer.hand = [];
+	clearPoints(hoomanPlayer);
+	dealer.hand = [];
+	clearPoints(dealer);
+}
 
+console.log(deck.length);
 
+var replenishDeck = function() {
+	if (deck.length < 10) {
+		while (fullDeck.length !==0) {
+			fullDeck.splice(Math.floor(Math.random() * (fullDeck.length - 1)), 1);
+			deck.push(moveCard[0]);
+		};
+	};
+};

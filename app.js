@@ -4,7 +4,7 @@
 // (ﾉಥ益ಥ）ﾉ﻿ ┻━┻
 // But here's the deck in an array that I'm going
 // to apply Fisher-Yates to for shuffling purposes
- var deck = 
+ var fullDeck = 
 	[{name: "2 of Clubs", value: 2},
 	 {name: "3 of Clubs", value: 3},
 	 {name: "4 of Clubs", value: 4},
@@ -73,6 +73,9 @@ var dealer =
 
 // Empty array to push shuffled cards into
 var shuffledDeck = [];
+// fullDeck is not affected so replenishment is possible
+var deckClone = fullDeck.slice(0);
+var deck = deckClone;
 // This is where the magic happens
 var shuffle = function() {
 	// Repeats until the original deck is empty
@@ -97,6 +100,18 @@ var shuffle = function() {
 	shuffledDeck = [];
 }
 
+// Play forever with automatically replenishing deck
+var replenishDeck = function() {
+	if (deck.length < 10) {
+		var deckClone = fullDeck.slice(0);
+		while (deckClone.length !==0) {
+			// Basically the shuffle function
+			var moveCardNew = deckClone.splice(Math.floor(Math.random() * (deckClone.length - 1)), 1);
+			deck.push(moveCardNew[0]);
+		};
+	};
+};
+
 // Shuffle away!
 $("#shuffle").click(function() {
 	shuffle();
@@ -118,6 +133,7 @@ var getPoints = function(player) {
 		player.points.push(player.hand[i].value);
 	};
 	console.log(player.points);
+	// Sum up points
 		for (var i in player.points) {
 			player.totalPoints = player.points.reduce(function(a,b) {
 				return a + b;
@@ -125,17 +141,21 @@ var getPoints = function(player) {
 		};
 	console.log(player.totalPoints);
 	findAce(player);
+	// See if there are any changes with Ace
 	console.log(player.totalPoints);
 }
 
-// So there are no repeats
+// So there are no repeats when calculating points
 var clearPoints = function(player) {
 	player.points = [];
 	player.totalPoints = 0;
+	// Checking to make sure it is cleared
 	console.log(player.points);
 	console.log(player.totalPoints);
 }
 
+// Value of Ace is adjusted if necessary
+// Jess came up with this idea, honestly a lifesaver
 var findAce = function(player) {
 	for (var i = 0; i < (player.hand).length; i++) {
 		if ((player.hand[i]).value === 11) {
@@ -146,36 +166,78 @@ var findAce = function(player) {
 	};
 }
 
-var startGame = function() {
+var newHand = function() {
+	hoomanPlayer.hand = [];
+	clearPoints(hoomanPlayer);
+	dealer.hand = [];
+	clearPoints(dealer);
+	replenishDeck();
+};
+
+// Deals two cards to each player
+var dealHands = function() {
 	while (hoomanPlayer.hand.length < 2 && dealer.hand.length < 2) {
 	dealCard(hoomanPlayer);
 	dealCard(dealer);
 	};
 	getPoints(hoomanPlayer);
 	getPoints(dealer);
-}
+	// Check for "Blackjack"
+	if (hoomanPlayer.totalPoints === 21) {
+		console.log("Player wins!");
+		newHand();
+	};
+};
 
+// Runs when player stays
 var hitUntil17 = function() {
 	while (dealer.totalPoints < 17) {
 		clearPoints(dealer);
 		dealCard(dealer);
 		getPoints(dealer);
 	};
-// 	clearPoints(dealer);
-// 	getPoints(dealer);
 };
 
+// Comparing card values after hit and/or stay occurs
+var calculateWinner = function () {
+	if (dealer.totalPoints > 21) {
+		// Player wins!
+		console.log("Player wins!");
+	} else if (hoomanPlayer.totalPoints > dealer.totalPoints) {
+		// Player wins!
+		console.log("Player wins!");
+	} else if (dealer.totalPoints > hoomanPlayer.totalPoints) {
+		// Dealer wins!
+		console.log("Dealer wins!");
+	} else {
+		// Push!
+		console.log("Push!");
+	};
+	console.log("Deck has: " + deck.length + " cards.");
+	newHand();
+};
 
 $("#hit-me").click(function() {
 	dealCard(hoomanPlayer);
-	clearPoints(hoomanPlayer)
+	clearPoints(hoomanPlayer);
 	getPoints(hoomanPlayer);
+	if (hoomanPlayer.totalPoints > 21) {
+		console.log("Bust!");
+		newHand();
+	} else if (hoomanPlayer.totalPoints === 21) {
+		console.log("Player wins!");
+		newHand();
+	} else {
+		// Do nothing
+	};
+	console.log("Deck has: " + deck.length + " cards.");
 });
 
-$("#start-game").click(function() {
-	startGame();
+$("#deal-hands").click(function() {
+	dealHands();
 });
 
 $("#stay").click(function() {
 	hitUntil17();
+	calculateWinner();
 });
