@@ -400,3 +400,175 @@ var replenishDeck = function() {
 		};
 	};
 };
+
+function displayCard = function() {
+
+}
+
+player.hand[i].value
+
+
+function displayCards(player, div){
+	var playerCard = player.hand[i].name
+    var cardImage = $("<img>").attr("src", "cards/" + playerCard + ".png")
+    // .attr("display", "inline-block").attr("height", 250).attr("width", 172)
+    $(div).append(playerCard)
+}
+
+// ========================================
+
+// Shuffle away!
+// $("#shuffle").click(function() {
+// 	shuffle();
+// 	// Testing purposes
+// 	// Can't figure out the DRY way to do this
+// 	console.log(deck[0], deck[1], deck[2], deck[3], deck[4], deck[5]);
+// });
+
+// Deal card
+var dealCard = function(player) {
+	cardDealt = deck.shift();
+	(player.hand).push(cardDealt);
+	console.log(player.hand);
+}
+
+var appendPlayerCard = function() {
+	for (i = 0; i < hoomanPlayer.hand.length; i++) {
+		var playerCard = hoomanPlayer.hand[i].name;
+	  var cardImage = $("<img>").attr("src", "cards/" + playerCard + ".png").attr("height", 150).attr("width", 103);
+	  $("#player-cards").append(cardImage);
+	};
+};
+
+var appendDealerCard = function() {
+	for (i = 0; i < dealer.hand.length; i++) {
+		var dealerCard = dealer.hand[i].name;
+	  var cardImage = $("<img>").attr("src", "cards/" + dealerCard + ".png").attr("height", 150).attr("width", 103);
+	  $("#dealer-cards").append(cardImage);
+	};
+};
+
+// Calculate points
+var getPoints = function(player) {
+	for (var i = 0; i < player.hand.length; i++) {
+		player.points.push(player.hand[i].value);
+	};
+	console.log(player.points);
+	// Sum up points
+		for (var i in player.points) {
+			player.totalPoints = player.points.reduce(function(a,b) {
+				return a + b;
+			});
+		};
+	console.log(player.totalPoints);
+	findAce(player);
+	// See if there are any changes with Ace
+	console.log(player.totalPoints);
+}
+
+// So there are no repeats when calculating points
+var clearPoints = function(player) {
+	player.points = [];
+	player.totalPoints = 0;
+	// Checking to make sure it is cleared
+	console.log(player.points);
+	console.log(player.totalPoints);
+}
+
+// Value of Ace is adjusted if necessary
+// Jess came up with this idea, honestly a lifesaver
+var findAce = function(player) {
+	for (var i = 0; i < (player.hand).length; i++) {
+		if ((player.hand[i]).value === 11) {
+			if (player.totalPoints > 21) {
+				player.totalPoints = player.totalPoints - 10;
+			};
+		};
+	};
+}
+
+var newHand = function() {
+	hoomanPlayer.hand = [];
+	clearPoints(hoomanPlayer);
+	dealer.hand = [];
+	clearPoints(dealer);
+	replenishDeck();
+};
+
+// Deals two cards to each player
+var dealHands = function() {
+	if (deck.length >= 52) {
+		shuffle();
+		//Extra shuffling just because
+		shuffle();
+		shuffle();
+	};
+	while (hoomanPlayer.hand.length < 2 && dealer.hand.length < 2) {
+		dealCard(hoomanPlayer);
+		dealCard(dealer);
+	};
+	$("#dealer-label").text("Dealer");
+	$("#player-label").text("Player");
+	appendPlayerCard();
+	appendDealerCard();
+	getPoints(hoomanPlayer);
+	getPoints(dealer);
+	// Check for "Blackjack"
+	if (hoomanPlayer.totalPoints === 21) {
+		console.log("Player wins!");
+		newHand();
+	};
+};
+
+// Runs when player stays
+var hitUntil17 = function() {
+	while (dealer.totalPoints < 17) {
+		clearPoints(dealer);
+		dealCard(dealer);
+		getPoints(dealer);
+	};
+};
+
+// Comparing card values after hit and/or stay occurs
+var calculateWinner = function () {
+	if (dealer.totalPoints > 21) {
+		// Player wins!
+		console.log("Player wins!");
+	} else if (hoomanPlayer.totalPoints > dealer.totalPoints) {
+		// Player wins!
+		console.log("Player wins!");
+	} else if (dealer.totalPoints > hoomanPlayer.totalPoints) {
+		// Dealer wins!
+		console.log("Dealer wins!");
+	} else {
+		// Push!
+		console.log("Push!");
+	};
+	console.log("Deck has: " + deck.length + " cards.");
+	newHand();
+};
+
+$("#hit-me").click(function() {
+	dealCard(hoomanPlayer);
+	clearPoints(hoomanPlayer);
+	getPoints(hoomanPlayer);
+	if (hoomanPlayer.totalPoints > 21) {
+		console.log("Bust!");
+		newHand();
+	} else if (hoomanPlayer.totalPoints === 21) {
+		console.log("Player wins!");
+		newHand();
+	} else {
+		// Do nothing
+	};
+	console.log("Deck has: " + deck.length + " cards.");
+});
+
+$("#deal-hands").click(function() {
+	dealHands();
+});
+
+$("#stand").click(function() {
+	hitUntil17();
+	calculateWinner();
+});

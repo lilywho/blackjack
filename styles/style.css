@@ -5,20 +5,47 @@ body {
   	radial-gradient(
   		green,
   		#005A00);
- }
+}
 
- h1 {
+h1 {
  	text-align: center;
  	font-family: 'Martel', serif;
- 	font-size: 72px;
+ 	font-size: 68px;
  	color: #B50000;
  	text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
- }
+ 	margin-bottom: 0;
+}
 
- #logo {
- 	height: 65px;
- }
+#logo {
+ 	height: 60px;
+}
 
- #buttons {
+#left {
+	text-align: center;
+	width: 900px;
+}
+
+#buttons {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#bad-at-math {
+	text-align: center;
+	width: 
+}
+
+.label-area {
+	height: 20px;
+	font-size: 20px;
+}
+
+.card-area {
+ 	height: 150px;
+ 	margin-bottom: 10px; 
+ 	margin-top: 10px;
+}
+
+/* #buttons {
  	text-align: center;
- }
+ }*/

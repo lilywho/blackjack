@@ -58,11 +58,6 @@
 	 {name: "k_of_spades", value: 10, url: ""},
 	 {name: "a_of_spades", value: 11, url: ""}];
 
-for (i = 0; i < fullDeck.length; i++) { 
-// set URL of img + assign dealt = false because card has not been dealt yet
-  fullDeck[i].url =  "cards/" + fullDeck[i] + ".png", 
-}
-
 var hoomanPlayer = 
 	{hand: [],
 	 points: [],
@@ -103,7 +98,7 @@ var shuffle = function() {
 	deck = shuffledDeck;
 	console.log(deck);
 	shuffledDeck = [];
-}
+};
 
 // Play forever with automatically replenishing deck
 var replenishDeck = function() {
@@ -117,20 +112,12 @@ var replenishDeck = function() {
 	};
 };
 
-// Shuffle away!
-// $("#shuffle").click(function() {
-// 	shuffle();
-// 	// Testing purposes
-// 	// Can't figure out the DRY way to do this
-// 	console.log(deck[0], deck[1], deck[2], deck[3], deck[4], deck[5]);
-// });
-
 // Deal card
 var dealCard = function(player) {
 	cardDealt = deck.shift();
 	(player.hand).push(cardDealt);
 	console.log(player.hand);
-}
+};
 
 // Calculate points
 var getPoints = function(player) {
@@ -148,7 +135,7 @@ var getPoints = function(player) {
 	findAce(player);
 	// See if there are any changes with Ace
 	console.log(player.totalPoints);
-}
+};
 
 // So there are no repeats when calculating points
 var clearPoints = function(player) {
@@ -157,7 +144,7 @@ var clearPoints = function(player) {
 	// Checking to make sure it is cleared
 	console.log(player.points);
 	console.log(player.totalPoints);
-}
+};
 
 // Value of Ace is adjusted if necessary
 // Jess came up with this idea, honestly a lifesaver
@@ -169,7 +156,7 @@ var findAce = function(player) {
 			};
 		};
 	};
-}
+};
 
 var newHand = function() {
 	hoomanPlayer.hand = [];
@@ -177,6 +164,24 @@ var newHand = function() {
 	dealer.hand = [];
 	clearPoints(dealer);
 	replenishDeck();
+};
+
+// Makes player's cards appear
+var appendPlayerCard = function() {
+	for (i = 0; i < hoomanPlayer.hand.length; i++) {
+		var playerCard = hoomanPlayer.hand[i].name;
+	  var cardImage = $("<img>").attr("src", "cards/" + playerCard + ".png").attr("height", 150).attr("width", 103);
+	  $("#player-cards").append(cardImage);
+	};
+};
+
+// Makes dealer's cards appear
+var appendDealerCard = function() {
+	for (i = 0; i < dealer.hand.length; i++) {
+		var dealerCard = dealer.hand[i].name;
+	  var cardImage = $("<img>").attr("src", "cards/" + dealerCard + ".png").attr("height", 150).attr("width", 103);
+	  $("#dealer-cards").append(cardImage);
+	};
 };
 
 // Deals two cards to each player
@@ -190,14 +195,18 @@ var dealHands = function() {
 	while (hoomanPlayer.hand.length < 2 && dealer.hand.length < 2) {
 		dealCard(hoomanPlayer);
 		dealCard(dealer);
-		};
-		getPoints(hoomanPlayer);
-		getPoints(dealer);
-		// Check for "Blackjack"
-		if (hoomanPlayer.totalPoints === 21) {
-			console.log("Player wins!");
-			newHand();
-		};
+	};
+	$("#dealer-label").text("Dealer");
+	$("#player-label").text("Player");
+	appendPlayerCard();
+	appendDealerCard();
+	getPoints(hoomanPlayer);
+	getPoints(dealer);
+	// Check for "Blackjack"
+	if (hoomanPlayer.totalPoints === 21) {
+		console.log("Player wins!");
+		newHand();
+	};
 };
 
 // Runs when player stays
@@ -213,42 +222,57 @@ var hitUntil17 = function() {
 var calculateWinner = function () {
 	if (dealer.totalPoints > 21) {
 		// Player wins!
-		console.log("Player wins!");
+		alert("Player wins!");
 	} else if (hoomanPlayer.totalPoints > dealer.totalPoints) {
 		// Player wins!
-		console.log("Player wins!");
+		alert("Player wins!");
 	} else if (dealer.totalPoints > hoomanPlayer.totalPoints) {
 		// Dealer wins!
-		console.log("Dealer wins!");
+		alert("Dealer wins!");
 	} else {
 		// Push!
-		console.log("Push!");
+		alert("Push!");
 	};
 	console.log("Deck has: " + deck.length + " cards.");
+	$(".card-area").empty();
 	newHand();
 };
 
+// Deals a card to player
 $("#hit-me").click(function() {
 	dealCard(hoomanPlayer);
+	$("#player-cards").empty();
+	appendPlayerCard();
 	clearPoints(hoomanPlayer);
 	getPoints(hoomanPlayer);
-	if (hoomanPlayer.totalPoints > 21) {
-		console.log("Bust!");
-		newHand();
-	} else if (hoomanPlayer.totalPoints === 21) {
-		console.log("Player wins!");
-		newHand();
+	//Check for win or bust
+	if (hoomanPlayer.totalPoints < 21) {
+		// Do nothing.
 	} else {
-		// Do nothing
+		if (hoomanPlayer.totalPoints > 21) {
+			alert("Bust!");
+			newHand();
+		} else {
+			alert("Player wins!");
+			newHand();
+		};
+		$(".card-area").empty();
+		console.log("Deck has: " + deck.length + " cards.");
 	};
-	console.log("Deck has: " + deck.length + " cards.");
 });
 
+// Begins new hand, deals to players
 $("#deal-hands").click(function() {
 	dealHands();
 });
 
+// Stand button, skip player
 $("#stand").click(function() {
 	hitUntil17();
+	$("#dealer-cards").empty();
+	appendDealerCard();
 	calculateWinner();
 });
+
+
+
