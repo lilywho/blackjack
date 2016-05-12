@@ -5,58 +5,63 @@
 // But here's the deck in an array that I'm going
 // to apply Fisher-Yates to for shuffling purposes
  var fullDeck = 
-	[{name: "2 of Clubs", value: 2},
-	 {name: "3 of Clubs", value: 3},
-	 {name: "4 of Clubs", value: 4},
-	 {name: "5 of Clubs", value: 5},
-	 {name: "6 of Clubs", value: 6},
-	 {name: "7 of Clubs", value: 7},
-	 {name: "8 of Clubs", value: 8},
-	 {name: "9 of Clubs", value: 9},
-	 {name: "10 of Clubs", value: 10},
-	 {name: "J of Clubs", value: 10},
-	 {name: "Q of Clubs", value: 10},
- 	 {name: "K of Clubs", value: 10},
-	 {name: "A of Clubs", value: 11},
-	 {name: "2 of Diamonds", value: 2},
-	 {name: "3 of Diamonds", value: 3},
-	 {name: "4 of Diamonds", value: 4},
-	 {name: "5 of Diamonds", value: 5},
-	 {name: "6 of Diamonds", value: 6},
-	 {name: "7 of Diamonds", value: 7},
-	 {name: "8 of Diamonds", value: 8},
-	 {name: "9 of Diamonds", value: 9},
-	 {name: "10 of Diamonds", value: 10},
-	 {name: "J of Diamonds", value: 10},
-	 {name: "Q of Diamonds", value: 10},
-	 {name: "K of Diamonds", value: 10},
-	 {name: "A of Diamonds", value: 11},
-	 {name: "2 of Hearts", value: 2},
-	 {name: "3 of Hearts", value: 3},
-	 {name: "4 of Hearts", value: 4},
-	 {name: "5 of Hearts", value: 5},
-	 {name: "6 of Hearts", value: 6},
-	 {name: "7 of Hearts", value: 7},
-	 {name: "8 of Hearts", value: 8},
-	 {name: "9 of Hearts", value: 9},
-	 {name: "10 of Hearts", value: 10},
-	 {name: "J of Hearts", value: 10},
-	 {name: "Q of Hearts", value: 10},
-	 {name: "K of Hearts", value: 10},
-	 {name: "A of Hearts", value: 11},
-	 {name: "2 of Spades", value: 2},
-	 {name: "3 of Spades", value: 3},
-	 {name: "4 of Spades", value: 4},
-	 {name: "5 of Spades", value: 5},
-	 {name: "6 of Spades", value: 6},
-	 {name: "7 of Spades", value: 7},
-	 {name: "8 of Spades", value: 8},
-	 {name: "9 of Spades", value: 9},
-	 {name: "10 of Spades", value: 10},
-	 {name: "J of Spades", value: 10},
-	 {name: "Q of Spades", value: 10},
-	 {name: "K of Spades", value: 10},
-	 {name: "A of Spades", value: 11}];
+	[{name: "2_of_clubs", value: 2, url: ""},
+	 {name: "3_of_clubs", value: 3, url: ""},
+	 {name: "4_of_clubs", value: 4, url: ""},
+	 {name: "5_of_clubs", value: 5, url: ""},
+	 {name: "6_of_clubs", value: 6, url: ""},
+	 {name: "7_of_clubs", value: 7, url: ""},
+	 {name: "8_of_clubs", value: 8, url: ""},
+	 {name: "9_of_clubs", value: 9, url: ""},
+	 {name: "10_of_clubs", value: 10, url: ""},
+	 {name: "j_of_clubs", value: 10, url: ""},
+	 {name: "q_of_clubs", value: 10, url: ""},
+ 	 {name: "k_of_clubs", value: 10, url: ""},
+	 {name: "a_of_clubs", value: 11, url: ""},
+	 {name: "2_of_diamonds", value: 2, url: ""},
+	 {name: "3_of_diamonds", value: 3, url: ""},
+	 {name: "4_of_diamonds", value: 4, url: ""},
+	 {name: "5_of_diamonds", value: 5, url: ""},
+	 {name: "6_of_diamonds", value: 6, url: ""},
+	 {name: "7_of_diamonds", value: 7, url: ""},
+	 {name: "8_of_diamonds", value: 8, url: ""},
+	 {name: "9_of_diamonds", value: 9, url: ""},
+	 {name: "10_of_diamonds", value: 10, url: ""},
+	 {name: "j_of_diamonds", value: 10, url: ""},
+	 {name: "q_of_diamonds", value: 10, url: ""},
+	 {name: "k_of_diamonds", value: 10, url: ""},
+	 {name: "a_of_diamonds", value: 11, url: ""},
+	 {name: "2_of_hearts", value: 2, url: ""},
+	 {name: "3_of_hearts", value: 3, url: ""},
+	 {name: "4_of_hearts", value: 4, url: ""},
+	 {name: "5_of_hearts", value: 5, url: ""},
+	 {name: "6_of_hearts", value: 6, url: ""},
+	 {name: "7_of_hearts", value: 7, url: ""},
+	 {name: "8_of_hearts", value: 8, url: ""},
+	 {name: "9_of_hearts", value: 9, url: ""},
+	 {name: "10_of_hearts", value: 10, url: ""},
+	 {name: "j_of_hearts", value: 10, url: ""},
+	 {name: "q_of_hearts", value: 10, url: ""},
+	 {name: "k_of_hearts", value: 10, url: ""},
+	 {name: "a_of_hearts", value: 11, url: ""},
+	 {name: "2_of_spades", value: 2, url: ""},
+	 {name: "3_of_spades", value: 3, url: ""},
+	 {name: "4_of_spades", value: 4, url: ""},
+	 {name: "5_of_spades", value: 5, url: ""},
+	 {name: "6_of_spades", value: 6, url: ""},
+	 {name: "7_of_spades", value: 7, url: ""},
+	 {name: "8_of_spades", value: 8, url: ""},
+	 {name: "9_of_spades", value: 9, url: ""},
+	 {name: "10_of_spades", value: 10, url: ""},
+	 {name: "j_of_spades", value: 10, url: ""},
+	 {name: "q_of_spades", value: 10, url: ""},
+	 {name: "k_of_spades", value: 10, url: ""},
+	 {name: "a_of_spades", value: 11, url: ""}];
+
+for (i = 0; i < fullDeck.length; i++) { 
+// set URL of img + assign dealt = false because card has not been dealt yet
+  fullDeck[i].url =  "cards/" + fullDeck[i] + ".png", 
+}
 
 var hoomanPlayer = 
 	{hand: [],
@@ -113,12 +118,12 @@ var replenishDeck = function() {
 };
 
 // Shuffle away!
-$("#shuffle").click(function() {
-	shuffle();
-	// Testing purposes
-	// Can't figure out the DRY way to do this
-	console.log(deck[0], deck[1], deck[2], deck[3], deck[4], deck[5]);
-});
+// $("#shuffle").click(function() {
+// 	shuffle();
+// 	// Testing purposes
+// 	// Can't figure out the DRY way to do this
+// 	console.log(deck[0], deck[1], deck[2], deck[3], deck[4], deck[5]);
+// });
 
 // Deal card
 var dealCard = function(player) {
@@ -176,17 +181,23 @@ var newHand = function() {
 
 // Deals two cards to each player
 var dealHands = function() {
+	if (deck.length >= 52) {
+		shuffle();
+		//Extra shuffling just because
+		shuffle();
+		shuffle();
+	}
 	while (hoomanPlayer.hand.length < 2 && dealer.hand.length < 2) {
-	dealCard(hoomanPlayer);
-	dealCard(dealer);
-	};
-	getPoints(hoomanPlayer);
-	getPoints(dealer);
-	// Check for "Blackjack"
-	if (hoomanPlayer.totalPoints === 21) {
-		console.log("Player wins!");
-		newHand();
-	};
+		dealCard(hoomanPlayer);
+		dealCard(dealer);
+		};
+		getPoints(hoomanPlayer);
+		getPoints(dealer);
+		// Check for "Blackjack"
+		if (hoomanPlayer.totalPoints === 21) {
+			console.log("Player wins!");
+			newHand();
+		};
 };
 
 // Runs when player stays
@@ -237,7 +248,7 @@ $("#deal-hands").click(function() {
 	dealHands();
 });
 
-$("#stay").click(function() {
+$("#stand").click(function() {
 	hitUntil17();
 	calculateWinner();
 });
