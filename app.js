@@ -177,7 +177,9 @@ var appendPlayerCard = function() {
 
 // Makes dealer's cards appear
 var appendDealerCard = function() {
-	for (i = 0; i < dealer.hand.length; i++) {
+	var hiddenCard = $("<img>").attr("src", "cards/cardback.jpg").attr("id", "hidden-card").attr("height", 150).attr("width", 103);
+	$("#dealer-cards").append(hiddenCard);
+	for (i = 1; i < dealer.hand.length; i++) {
 		var dealerCard = dealer.hand[i].name;
 	  var cardImage = $("<img>").attr("src", "cards/" + dealerCard + ".png").attr("height", 150).attr("width", 103);
 	  $("#dealer-cards").append(cardImage);
@@ -196,12 +198,12 @@ var dealHands = function() {
 		dealCard(hoomanPlayer);
 		dealCard(dealer);
 	};
-	$("#dealer-label").text("Dealer");
-	$("#player-label").text("Player");
 	appendPlayerCard();
 	appendDealerCard();
 	getPoints(hoomanPlayer);
 	getPoints(dealer);
+	$("#dealer-label").text("Dealer: " + dealer.totalPoints);
+	$("#player-label").text("Player: " + hoomanPlayer.totalPoints);
 	// Check for "Blackjack"
 	if (hoomanPlayer.totalPoints === 21) {
 		console.log("Player wins!");
@@ -215,6 +217,7 @@ var hitUntil17 = function() {
 		clearPoints(dealer);
 		dealCard(dealer);
 		getPoints(dealer);
+		$("#dealer-label").text("Dealer: " + dealer.totalPoints);
 	};
 };
 
@@ -236,6 +239,8 @@ var calculateWinner = function () {
 	console.log("Deck has: " + deck.length + " cards.");
 	$(".card-area").empty();
 	newHand();
+	$("#player-label").text("Player: " + hoomanPlayer.totalPoints);
+	$("#dealer-label").text("Dealer: " + dealer.totalPoints);
 };
 
 // Deals a card to player
@@ -245,6 +250,7 @@ $("#hit-me").click(function() {
 	appendPlayerCard();
 	clearPoints(hoomanPlayer);
 	getPoints(hoomanPlayer);
+	$("#player-label").text("Player: " + hoomanPlayer.totalPoints);
 	//Check for win or bust
 	if (hoomanPlayer.totalPoints < 21) {
 		// Do nothing.
@@ -257,6 +263,8 @@ $("#hit-me").click(function() {
 			newHand();
 		};
 		$(".card-area").empty();
+		$("#player-label").text("Player: " + hoomanPlayer.totalPoints);
+		$("#dealer-label").text("Dealer: " + dealer.totalPoints);
 		console.log("Deck has: " + deck.length + " cards.");
 	};
 });
@@ -269,6 +277,9 @@ $("#deal-hands").click(function() {
 // Stand button, skip player
 $("#stand").click(function() {
 	hitUntil17();
+		var hiddenCard = dealer.hand[0].name;
+	  var cardImage = $("<img>").attr("src", "cards/" + hiddenCard + ".png").attr("height", 150).attr("width", 103);
+	$("#hidden-card").replaceWith(cardImage);
 	$("#dealer-cards").empty();
 	appendDealerCard();
 	calculateWinner();
