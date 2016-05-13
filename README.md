@@ -1,12 +1,12 @@
 # blackjack
 ###Description
--Standard Blackjack game using one deck of card
+- Standard Blackjack game using one deck of card
 
 
 ###Tech used / Stack
--HTML
--CSS
--JavaScript/JQuery
+- HTML
+- CSS
+- JavaScript/JQuery
 
 
 ###Features
@@ -16,6 +16,6 @@
 
 
 ###Future Implementations
--Add betting
--Include option to expand using more decks at once
--Include "insurance"
+- Add betting
+- Include option to expand using more decks at once
+- Include "insurance"
