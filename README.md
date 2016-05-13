@@ -10,9 +10,9 @@
 
 
 ###Features
--Automatic deck replenishment
--Fisher-Yates shuffling
--Ability to hit/stay
+- Automatic deck replenishment
+- Fisher-Yates shuffling
+- Ability to hit/stay
 
 
 ###Future Implementations
